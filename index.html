@@ -4,47 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chinmay Dhok - Resumes & Portfolio</title>
-    <!-- Google Fonts: Inter and Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Outfit and Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
     <style>
         :root {
-            --bg-color: #f8f9fa; /* Google's light gray background */
-            --card-bg: #ffffff;
-            --text-primary: #202124; /* Google's primary dark text */
-            --text-secondary: #5f6368; /* Google's secondary text */
-            --accent: #1a73e8; /* Google Blue */
-            --accent-hover: #174ea6;
-            --border-color: #dadce0;
+            /* Material 3 Dark Colors */
+            --md-sys-color-background: #0f1115;
+            --md-sys-color-on-background: #e1e2e8;
+            --md-sys-color-primary: #a8c7fa;
+            --md-sys-color-secondary: #c2c7cf;
+            --md-sys-color-tertiary: #38bdf8;
+            --md-sys-color-surface: rgba(20, 22, 27, 0.6);
+            --md-sys-color-surface-variant: rgba(68, 71, 78, 0.4);
+            --md-sys-color-outline: rgba(142, 145, 153, 0.2);
+            --glass-blur: blur(24px);
+        }
+
+        [data-theme="light"] {
+            /* Material 3 Light Colors */
+            --md-sys-color-background: #f8fafc;
+            --md-sys-color-on-background: #0f172a;
+            --md-sys-color-primary: #2563eb;
+            --md-sys-color-secondary: #475569;
+            --md-sys-color-tertiary: #0ea5e9;
+            --md-sys-color-surface: rgba(255, 255, 255, 0.7);
+            --md-sys-color-surface-variant: rgba(241, 245, 249, 0.6);
+            --md-sys-color-outline: rgba(148, 163, 184, 0.3);
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Abstract blurred background shapes */
+        .bg-shape {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out alternate;
+            transition: background-color 0.3s ease;
+        }
+        .shape-1 {
+            width: 400px; height: 400px;
+            background: rgba(168, 199, 250, 0.3);
+            top: -100px; left: -100px;
+        }
+        [data-theme="light"] .shape-1 { background: rgba(37, 99, 235, 0.2); }
+        
+        .shape-2 {
+            width: 500px; height: 500px;
+            background: rgba(56, 189, 248, 0.2);
+            bottom: 100px; right: -150px;
+            animation-delay: -10s;
+        }
+        [data-theme="light"] .shape-2 { background: rgba(14, 165, 233, 0.15); }
+
+        .shape-3 {
+            width: 300px; height: 300px;
+            background: rgba(194, 199, 207, 0.2);
+            top: 40%; left: 30%;
+            animation-delay: -5s;
+        }
+        [data-theme="light"] .shape-3 { background: rgba(37, 99, 235, 0.1); }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        /* Theme Toggle Button */
+        #theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--md-sys-color-surface-variant);
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-on-background);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        #theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--md-sys-color-primary);
         }
 
         .navbar {
             width: 100%;
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
+            background-color: var(--md-sys-color-surface);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--md-sys-color-outline);
             padding: 1rem 0;
             display: flex;
             justify-content: center;
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .navbar-content {
-            max-width: 1000px;
+            max-width: 1100px;
             width: 100%;
             padding: 0 2rem;
             display: flex;
@@ -56,13 +139,14 @@
         .logo {
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--text-primary);
+            color: var(--md-sys-color-on-background);
             text-decoration: none;
             letter-spacing: -0.5px;
+            transition: color 0.3s ease;
         }
         
         .nav-links a {
-            color: var(--text-secondary);
+            color: var(--md-sys-color-secondary);
             text-decoration: none;
             margin-left: 1.5rem;
             font-size: 0.95rem;
@@ -71,20 +155,20 @@
         }
 
         .nav-links a:hover {
-            color: var(--accent);
+            color: var(--md-sys-color-primary);
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             width: 100%;
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             box-sizing: border-box;
             flex-grow: 1;
         }
 
         header.hero {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
             animation: fadeInDown 0.8s ease-out;
         }
 
@@ -92,20 +176,24 @@
             font-size: 3.5rem;
             font-weight: 700;
             margin: 0;
-            color: var(--text-primary);
+            background: linear-gradient(90deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: -1px;
             line-height: 1.2;
+            display: inline-block;
         }
 
         header.hero p {
             font-size: 1.25rem;
-            color: var(--text-secondary);
+            color: var(--md-sys-color-secondary);
             margin-top: 1rem;
-            font-weight: 400;
-            max-width: 600px;
+            font-weight: 300;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
             line-height: 1.6;
+            transition: color 0.3s ease;
         }
 
         .grid {
@@ -115,17 +203,21 @@
         }
 
         .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 2rem;
+            background-color: var(--md-sys-color-surface);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 28px;
+            padding: 2.5rem;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
             text-decoration: none;
             color: inherit;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
             animation: fadeInUp 0.8s ease-out backwards;
+            position: relative;
+            overflow: hidden;
         }
 
         /* Staggered animation for cards */
@@ -137,8 +229,11 @@
 
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-            border-color: transparent;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            border-color: rgba(168, 199, 250, 0.4);
+        }
+        [data-theme="light"] .card:hover {
+            border-color: rgba(37, 99, 235, 0.4);
         }
 
         .card-header {
@@ -148,79 +243,92 @@
         }
 
         .card-icon {
-            background-color: #e8f0fe;
-            color: var(--accent);
-            width: 48px;
-            height: 48px;
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-primary);
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
+            margin-right: 1.2rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .card:hover .card-icon {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-background);
         }
 
         .card h2 {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 600;
             margin: 0;
-            color: var(--text-primary);
+            color: var(--md-sys-color-on-background);
+            transition: color 0.3s ease;
         }
 
         .card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin: 0 0 1.5rem 0;
-            line-height: 1.5;
+            color: var(--md-sys-color-secondary);
+            font-size: 1rem;
+            margin: 0 0 2rem 0;
+            line-height: 1.6;
+            font-weight: 300;
             flex-grow: 1;
+            transition: color 0.3s ease;
         }
 
         .btn-text {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 0.95rem;
+            color: var(--md-sys-color-primary);
+            font-weight: 500;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             margin-top: auto;
+            transition: color 0.3s ease;
         }
 
         .btn-text .material-symbols-rounded {
             margin-left: 0.25rem;
             font-size: 1.25rem;
-            transition: transform 0.2s;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .card:hover .btn-text .material-symbols-rounded {
-            transform: translateX(4px);
+            transform: translateX(8px);
         }
 
         footer {
-            background-color: var(--card-bg);
-            border-top: 1px solid var(--border-color);
+            background-color: var(--md-sys-color-surface);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-top: 1px solid var(--md-sys-color-outline);
             width: 100%;
             padding: 2rem 0;
             text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
+            color: var(--md-sys-color-secondary);
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         footer a {
-            color: var(--text-secondary);
+            color: var(--md-sys-color-primary);
             text-decoration: none;
             font-weight: 500;
         }
 
         footer a:hover {
-            color: var(--text-primary);
+            text-decoration: underline;
         }
 
         /* Animations */
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -228,10 +336,20 @@
             header.hero h1 { font-size: 2.5rem; }
             .container { padding: 3rem 1.5rem; }
             .grid { grid-template-columns: 1fr; }
+            .card { padding: 2rem; }
         }
     </style>
 </head>
-<body>
+<body data-theme="dark">
+
+    <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        <svg id="sun-icon" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg id="moon-icon" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
 
     <nav class="navbar">
         <div class="navbar-content">
@@ -303,5 +421,42 @@
         <p>&copy; 2026 Chinmay Dhok. Built via GitHub Pages.</p>
     </footer>
 
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        
+        // Check for saved theme or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Default to dark unless light was explicitly saved
+        const defaultTheme = savedTheme === 'light' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', defaultTheme);
+        document.body.setAttribute('data-theme', defaultTheme);
+        updateIcons(defaultTheme);
+
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            updateIcons(newTheme);
+        });
+
+        function updateIcons(theme) {
+            if (theme === 'dark') {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
