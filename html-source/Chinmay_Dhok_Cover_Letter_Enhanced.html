@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cover Letter</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-bg: #1A2E35;
+            --sidebar-text: #E2E8F0;
+            --accent: #2563EB;
+            --main-text: #334155;
+            --main-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        @page {
+            size: letter;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            color: var(--main-text);
+            width: 8.5in;
+            height: 11in;
+            display: flex;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 3in;
+            background-color: var(--sidebar-bg);
+            color: #fff;
+            height: 100%;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 2rem auto;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            display: block;
+        }
+
+        .name {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--sidebar-text);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            letter-spacing: 1px;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            width: 100%;
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.95rem;
+            color: var(--sidebar-text);
+        }
+
+        .contact-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .contact-item a {
+            color: var(--sidebar-text);
+            text-decoration: none;
+        }
+
+        .main-content {
+            width: 5.5in;
+            padding: 3rem;
+            background: var(--main-bg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .date {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2.5rem;
+            color: var(--main-text);
+        }
+
+        .greeting {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .letter-body {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--main-text);
+        }
+
+        .letter-body p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+
+        .sign-off {
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .signature {
+            margin-top: 2rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--main-text);
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <!-- Using the photo we copied earlier to the Github Repo folder -->
+        <img src="../github-repos/chinmay-dhok/profile.jpg" alt="Chinmay Dhok" class="profile-pic">
+        
+        <div class="name">CHINMAY<br>DHOK</div>
+        <div class="title">Senior Information Security Analyst</div>
+        
+        <div class="divider"></div>
+        
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Pune, India</span>
+            </div>
+            <div class="contact-item">
+                <i class="fa-solid fa-phone"></i>
+                <span>+91 702 375 5730</span>
+            </div>
+            <div class="contact-item">
+                <i class="fa-solid fa-envelope"></i>
+                <a href="mailto:chinmaydhok2013@gmail.com">chinmaydhok2013@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <i class="fa-brands fa-linkedin"></i>
+                <a href="https://linkedin.com/in/chinmaydhok">linkedin.com/in/chinmaydhok</a>
+            </div>
+            <div class="contact-item">
+                <i class="fa-brands fa-github"></i>
+                <a href="https://github.com/chinmay-dhok">github.com/chinmay-dhok</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Content -->
+    <div class="main-content">
+        <!-- Javascript will inject today's date -->
+        <div class="date" id="current-date">August 23, 2026</div>
+        
+        <div class="greeting">To Whom It May Concern,</div>
+        
+        <div class="letter-body">
+            <p>I am writing to express my strong interest in senior-level Information Security and Cloud Architecture roles. With over 6 years of experience scaling enterprise cloud environments across GCP, Azure, and AWS, I bring a proven track record of designing robust Zero-Trust architectures and automating security workflows at an enterprise scale.</p>
+            
+            <p>In my current capacity as a Senior Information Security Analyst at <span class="highlight">Osmos</span>, I engineered and deployed GCP Privileged Access Management (PAM) entitlements as Terraform code, transitioned legacy VPN perimeters to encrypted Tailscale remote access, and led the organization through an ISO 27001:2022 Stage-2 Surveillance Audit with zero major non-conformities. Furthermore, I executed automated security audits across over 500 code repositories, mitigating critical vulnerabilities and integrating rigorous security dashboards into CI/CD pipelines to block non-compliant code.</p>
+            
+            <p>Prior to this, during my tenure at <span class="highlight">MAQ Software</span>, I served in progressively senior roles up to Lead Systems Engineer and Azure AD Global Administrator. I managed directory-wide Conditional Access and privileged identity workflows, orchestrated the migration of over 200 projects to Azure DevOps resulting in a 15% efficiency improvement, and delivered highly secure hybrid network infrastructures that supported a 1,500-person global workforce.</p>
+            
+            <p>My core value proposition is the ability to bridge the gap between high-velocity engineering and rigorous enterprise compliance. I possess the deep operational knowledge required to build massive cloud infrastructures, paired with the strategic oversight needed to secure them against modern threats and stringent compliance frameworks such as SOC 2, GDPR, and CCPA.</p>
+            
+            <p>I am highly proficient with Terraform, Python, PowerShell, and various SIEM platforms. I am eager to leverage my expertise to harden your infrastructure and streamline operations. I welcome the opportunity to discuss how my background and certifications—including my Microsoft Certified Information Security Administrator Associate—align with your organization's security objectives.</p>
+            
+            <p>Thank you for your time and consideration.</p>
+        </div>
+        
+        <div class="sign-off">Sincerely,</div>
+        <div class="signature">Chinmay Dhok</div>
+    </div>
+
+    <script>
+        const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', dateOptions);
+    </script>
+</body>
+</html>
