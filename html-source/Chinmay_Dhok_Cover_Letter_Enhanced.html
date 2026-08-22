@@ -34,11 +34,12 @@
             background: #fff;
             color: var(--main-text);
             width: 8.5in;
-            height: 11in;
+            height: 10.9in; /* Slightly less than 11in to prevent second page spill */
             display: flex;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
+            box-sizing: border-box;
         }
 
         .sidebar {
@@ -112,10 +113,11 @@
 
         .main-content {
             width: 5.5in;
-            padding: 3rem;
+            padding: 2.5rem; /* Reduced padding from 3rem */
             background: var(--main-bg);
             display: flex;
             flex-direction: column;
+            box-sizing: border-box;
         }
 
         .date {
