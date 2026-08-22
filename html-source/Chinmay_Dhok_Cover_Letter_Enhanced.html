@@ -28,13 +28,27 @@
             size: letter;
             margin: 0;
         }
+        
+        @media print {
+            html, body {
+                height: 10.5in !important;
+                max-height: 10.5in !important;
+                overflow: hidden !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .sidebar, .main-content {
+                height: 100% !important;
+                overflow: hidden !important;
+            }
+        }
 
         body {
             font-family: 'Inter', sans-serif;
             background: #fff;
             color: var(--main-text);
             width: 8.5in;
-            height: 10.9in; /* Slightly less than 11in to prevent second page spill */
+            height: 10.5in; /* Strictly constrained to prevent second page spill */
             display: flex;
             margin: 0 auto;
             position: relative;
@@ -50,6 +64,7 @@
             padding: 3rem 2rem;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .profile-pic {
@@ -118,6 +133,8 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
+            overflow: hidden;
+            height: 100%;
         }
 
         .date {
