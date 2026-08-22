@@ -137,12 +137,22 @@
         }
 
         .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--md-sys-color-on-background);
             text-decoration: none;
             letter-spacing: -0.5px;
             transition: color 0.3s ease;
+        }
+        .nav-brand img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--md-sys-color-primary);
         }
 
         .nav-links {
@@ -402,7 +412,10 @@
 
     <nav class="navbar">
         <div class="navbar-content">
-            <a href="#" class="nav-brand">Chinmay Dhok</a>
+            <a href="#" class="nav-brand">
+                <img src="main_profile.jpg" alt="Chinmay Dhok">
+                Chinmay Dhok
+            </a>
             <div class="nav-links">
                 <a href="https://github.com/chinmay-dhok" class="nav-item" target="_blank">GitHub</a>
                 <a href="https://linkedin.com/in/chinmaydhok" class="nav-item" target="_blank">LinkedIn</a>
@@ -413,7 +426,6 @@
 
     <div class="container">
         <header class="hero">
-            <img src="profile.png" alt="Chinmay Dhok" style="display: block; margin: 0 auto 1.5rem auto; width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--md-sys-color-primary); box-shadow: 0 8px 16px rgba(0,0,0,0.15);">
             <h1>Career Documents</h1>
             <p>Access my latest professional resumes, cover letter, and master accomplishments log securely.</p>
         </header>
