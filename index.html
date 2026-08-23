@@ -341,7 +341,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
             z-index: 998;
             opacity: 0;
             transition: opacity var(--md-motion-duration-medium) var(--md-motion-expressive-default-effects);
@@ -821,14 +821,12 @@
                 height: 100vh;
                 height: 100dvh;
                 flex-direction: column;
-                background: var(--md-sys-color-surface);
-                backdrop-filter: var(--glass-blur);
-                -webkit-backdrop-filter: var(--glass-blur);
+                background: var(--md-sys-color-background); /* Solid background for readability */
                 padding: 5rem 2rem 2rem;
                 gap: 1.5rem;
                 transition: right var(--md-motion-duration-default) var(--md-motion-expressive-default-spatial);
                 z-index: 999;
-                box-shadow: -10px 0 40px rgba(0,0,0,0.2);
+                box-shadow: -10px 0 40px rgba(0,0,0,0.6); /* Stronger shadow to pop against overlay */
                 align-items: flex-start;
             }
             .nav-links.open {
