@@ -6,6 +6,12 @@
     <title>Gemini Spark Library</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+    
+    <!-- Favicon / PWA Web App Icon -->
+    <link rel="icon" type="image/jpeg" href="main_profile.jpg">
+    <link rel="apple-touch-icon" href="main_profile.jpg">
+    <meta name="theme-color" content="#0f1115">
+    
     <style>
         :root {
             /* Google Gemini Brand Colors */
@@ -56,15 +62,15 @@
             -webkit-backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--md-sys-color-outline);
             padding: 1rem 0; display: flex; justify-content: center; position: sticky; top: 0; z-index: 100;
         }
-        .navbar-content { max-width: 900px; width: 100%; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
+        .navbar-content { width: 100%; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
         .nav-brand { display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: 700; color: var(--md-sys-color-on-background); text-decoration: none; letter-spacing: -0.5px; }
         
         .container { max-width: 900px; width: 100%; padding: 4rem 1.5rem; box-sizing: border-box; flex-grow: 1; }
 
-        .hero { text-align: center; margin-bottom: 3rem; }
-        .spark-logo { font-size: 3rem; background: var(--gemini-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
-        .hero h1 { font-size: 3rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
-        .hero p { font-size: 1.2rem; color: var(--md-sys-color-secondary); margin-top: 1rem; font-weight: 300; line-height: 1.6; }
+        .hero { text-align: center; margin-bottom: 4rem; padding-top: 2rem; }
+        .spark-title { font-size: 3.5rem; color: var(--gemini-blue); margin: 0; font-weight: 500; letter-spacing: -1px; }
+        .hero h1 { font-size: 4.5rem; font-weight: 700; margin: 0 0 1.5rem 0; letter-spacing: -1.5px; color: var(--md-sys-color-on-background); line-height: 1.1; }
+        .hero p { font-size: 1.25rem; color: var(--md-sys-color-on-background); margin: 0 auto; font-weight: 400; line-height: 1.6; max-width: 800px; opacity: 0.9; }
 
         /* Accordion Library */
         .library { display: flex; flex-direction: column; gap: 1.5rem; }
@@ -186,7 +192,7 @@
                 Back to Portfolio
             </a>
             <div class="nav-brand" style="font-size: 1.1rem;">
-                <span class="material-symbols-rounded" style="background: var(--gemini-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">auto_awesome</span>
+                <img src="https://cdn.simpleicons.org/googlegemini/4285F4" alt="Gemini" style="width: 20px; height: 20px;">
                 Gemini Spark
             </div>
         </div>
@@ -194,9 +200,9 @@
 
     <div class="container">
         <header class="hero">
-            <div class="spark-logo"><span class="material-symbols-rounded" style="font-size: inherit;">auto_awesome</span></div>
-            <h1>Automate Your Life with Gemini</h1>
-            <p>Your 24/7 autonomous personal operating system. Deploy these custom Gemini sparks to master your logistics, automate administration, and reclaim your time.</p>
+            <h2 class="spark-title">Gemini Spark</h2>
+            <h1>Your 24/7 personal AI agent.</h1>
+            <p>Gemini Spark helps you navigate your digital life. Give it a task and it works in the background 24/7, even if your phone and laptop are turned off. It operates autonomously, but always under your direction. You choose to turn it on and it's designed to check with you before taking major actions.</p>
         </header>
 
         <div class="prompt-box">
@@ -204,7 +210,7 @@
                 <img src="https://cdn.simpleicons.org/googlegemini/4285F4" alt="Gemini">
                 <span>Start Building Your Own Spark</span>
             </div>
-            <p class="prompt-text" id="start-prompt">"Gemini, create an implementation plan for an autonomous agent that manages my <strong>[Insert Workflow Here]</strong>. It should connect to my Gmail and Google Sheets, and run autonomously."</p>
+            <p class="prompt-text" id="start-prompt">"Gemini, create an implementation plan for an autonomous agent that manages my <strong>[Insert Workflow Here]</strong>. Act as an expert system architect and ask me 3-5 clarifying questions about my specific environment, tools, and edge cases so you can tailor the solution exactly to my needs before generating the plan."</p>
             <button class="prompt-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('start-prompt').innerText); this.innerHTML='<span class=\'material-symbols-rounded\'>check</span> Copied!'; setTimeout(() => this.innerHTML='<span class=\'material-symbols-rounded\'>content_copy</span> Copy Prompt', 2000);">
                 <span class="material-symbols-rounded">content_copy</span> Copy Prompt
             </button>

@@ -7,6 +7,12 @@
     <!-- Google Fonts: Outfit and Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+    
+    <!-- Favicon / PWA Web App Icon -->
+    <link rel="icon" type="image/jpeg" href="main_profile.jpg">
+    <link rel="apple-touch-icon" href="main_profile.jpg">
+    <meta name="theme-color" content="#0f1115">
+    
     <style>
         :root {
             /* Material 3 Dark Colors */
@@ -126,7 +132,7 @@
         }
 
         .navbar-content {
-            max-width: 1100px;
+            max-width: 100%;
             width: 100%;
             padding: 0 2rem;
             display: flex;
@@ -414,28 +420,26 @@
 
         /* Spark Card Special Styling */
         .spark-card {
-            background: linear-gradient(145deg, rgba(142, 117, 178, 0.15) 0%, var(--md-sys-color-surface) 100%);
-            border-color: #8E75B2;
+            background: linear-gradient(145deg, rgba(66, 133, 244, 0.1) 0%, var(--md-sys-color-surface) 100%);
+            border-color: rgba(66, 133, 244, 0.5);
         }
         .spark-card .card-icon {
-            background-color: rgba(142, 117, 178, 0.2);
-            color: #b19cd9;
+            background-color: rgba(66, 133, 244, 0.15);
+            color: #4285F4;
         }
         .spark-card:hover {
-            border-color: #b19cd9;
-            box-shadow: 0 20px 40px rgba(142, 117, 178, 0.2);
+            border-color: #4285F4;
+            box-shadow: 0 20px 40px rgba(66, 133, 244, 0.2);
         }
         .spark-card:hover .card-icon {
-            background-color: #b19cd9;
-            color: #000;
+            background-color: #4285F4;
+            color: #fff;
         }
         .spark-card h2 {
-            background: linear-gradient(90deg, #b19cd9, #8E75B2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #4285F4;
         }
         .spark-card .btn-text {
-            color: #b19cd9;
+            color: #4285F4;
         }
 
         footer {
@@ -560,8 +564,8 @@
                         <h3 style="margin-bottom: 1rem;">☁️ Cloud & Infrastructure</h3>
                         <div class="skill-badges">
                             <span class="badge"><img src="https://cdn.simpleicons.org/googlecloud/4285F4" alt="GCP">Google Cloud</span>
-                            <span class="badge"><img src="https://cdn.simpleicons.org/microsoftazure/0078D4" alt="Azure">Microsoft Azure</span>
-                            <span class="badge"><img src="https://cdn.simpleicons.org/amazonaws/FF9900" alt="AWS">Amazon AWS</span>
+                            <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" alt="Azure">Microsoft Azure</span>
+                            <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS">Amazon AWS</span>
                             <span class="badge"><img src="https://cdn.simpleicons.org/terraform/844FBA" alt="Terraform">Terraform</span>
                         </div>
                     </div>
@@ -696,6 +700,10 @@
     </section>
 
     <footer>
+        <div style="margin-bottom: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+            <span style="color: var(--md-sys-color-on-background); font-weight: 500; font-size: 1.1rem;">Scan to Share</span>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://chinmay-dhok.github.io/" alt="Portfolio QR Code" style="border-radius: 12px; border: 2px solid var(--md-sys-color-outline); padding: 0.5rem; background: white;">
+        </div>
         <p class="copyright">&copy; 2026 Chinmay Dhok. Built via GitHub Pages.</p>
     </footer>
 
