@@ -341,7 +341,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.5);
             z-index: 998;
             opacity: 0;
             transition: opacity var(--md-motion-duration-medium) var(--md-motion-expressive-default-effects);
@@ -821,13 +821,18 @@
                 height: 100vh;
                 height: 100dvh;
                 flex-direction: column;
-                background: var(--md-sys-color-background); /* Solid background for readability */
+                background: rgba(20, 22, 27, 0.90); /* Frosted glass, very opaque but not flat black */
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-left: 1px solid rgba(255, 255, 255, 0.05);
                 padding: 5rem 2rem 2rem;
                 gap: 1.5rem;
                 transition: right var(--md-motion-duration-default) var(--md-motion-expressive-default-spatial);
                 z-index: 999;
-                box-shadow: -10px 0 40px rgba(0,0,0,0.6); /* Stronger shadow to pop against overlay */
+                box-shadow: -10px 0 40px rgba(0,0,0,0.4);
                 align-items: flex-start;
+                transform: translateZ(0); /* Hardware acceleration to prevent flicker */
+                will-change: transform, right;
             }
             .nav-links.open {
                 right: 0;
