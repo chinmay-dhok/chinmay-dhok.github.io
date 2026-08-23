@@ -1,5 +1,5 @@
 // Service Worker — App Shell + Network-First Strategy
-const CACHE_NAME = 'chinmay-portfolio-v3';
+const CACHE_NAME = 'chinmay-portfolio-v4';
 const APP_SHELL = [
     '/',
     '/index.html',
@@ -8,8 +8,7 @@ const APP_SHELL = [
     '/icons/icon-192.png',
     '/icons/icon-512.png',
     '/gemini-spark.html',
-    '/playbook/',
-    '/playbook/index.html'
+    '/strategic-playbook.html'
 ];
 
 const OFFLINE_PAGE = '/index.html';
