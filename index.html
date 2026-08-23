@@ -297,6 +297,9 @@
         }
 
         .badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             background: var(--md-sys-color-surface-variant);
             color: var(--md-sys-color-on-background);
             padding: 0.5rem 1rem;
@@ -304,6 +307,16 @@
             font-size: 0.9rem;
             border: 1px solid var(--md-sys-color-outline);
             font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .badge:hover {
+            background: var(--md-sys-color-surface);
+            border-color: var(--md-sys-color-primary);
+            transform: translateY(-2px);
+        }
+        .badge img {
+            width: 18px;
+            height: 18px;
         }
 
         /* Generic Grid for Projects & Docs */
@@ -546,28 +559,28 @@
                     <div class="skill-card" style="padding: 1.5rem;">
                         <h3 style="margin-bottom: 1rem;">☁️ Cloud & Infrastructure</h3>
                         <div class="skill-badges">
-                            <span class="badge">Google Cloud</span>
-                            <span class="badge">Microsoft Azure</span>
-                            <span class="badge">Amazon AWS</span>
-                            <span class="badge">Terraform</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/googlecloud/4285F4" alt="GCP">Google Cloud</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/microsoftazure/0078D4" alt="Azure">Microsoft Azure</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/amazonaws/FF9900" alt="AWS">Amazon AWS</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/terraform/844FBA" alt="Terraform">Terraform</span>
                         </div>
                     </div>
                     <div class="skill-card" style="padding: 1.5rem;">
                         <h3 style="margin-bottom: 1rem;">🔐 Security & DevSecOps</h3>
                         <div class="skill-badges">
-                            <span class="badge">Zero Trust</span>
-                            <span class="badge">GitHub Actions</span>
-                            <span class="badge">Tailscale</span>
-                            <span class="badge">BurpSuite</span>
+                            <span class="badge"><span class="material-symbols-rounded" style="font-size: 18px; color: var(--md-sys-color-primary)">shield</span>Zero Trust</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/githubactions/2088FF" alt="GitHub Actions">GitHub Actions</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/tailscale" alt="Tailscale" style="filter: invert(1);">Tailscale</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/burpsuite/FF6633" alt="BurpSuite">BurpSuite</span>
                         </div>
                     </div>
                     <div class="skill-card" style="padding: 1.5rem;">
                         <h3 style="margin-bottom: 1rem;">🤖 AI & Automation</h3>
                         <div class="skill-badges">
-                            <span class="badge">Python</span>
-                            <span class="badge">Gemini API</span>
-                            <span class="badge">Bash</span>
-                            <span class="badge">Docker</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/python/3776AB" alt="Python">Python</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/googlegemini/8E75B2" alt="Gemini API">Gemini API</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/gnubash/4EAA25" alt="Bash">Bash</span>
+                            <span class="badge"><img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker">Docker</span>
                         </div>
                     </div>
                 </div>
