@@ -316,6 +316,73 @@
             }
             .reveal { opacity: 1; transform: none; }
         }
+    
+        /* === Sparks Specific Layout CSS === */
+        .card {
+            background-color: var(--md-sys-color-surface);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: var(--gemini-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .connectors {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .connector-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--md-sys-color-surface-variant);
+            padding: 0.75rem 1.25rem;
+            border-radius: 100px;
+            font-weight: 500;
+            border: 1px solid var(--md-sys-color-outline);
+        }
+
+        .connector-badge img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .step-box {
+            background: var(--md-sys-color-surface-variant);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--gemini-purple);
+        }
+
+        .step-box h3 { margin-top: 0; margin-bottom: 0.5rem; font-size: 1.2rem; }
+        .step-box p { margin: 0; color: var(--md-sys-color-secondary); line-height: 1.6; }
+
+        @media (min-width: 768px) {
+            .workflow-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        ul { line-height: 1.6; color: var(--md-sys-color-secondary); }
+        ul li { margin-bottom: 0.5rem; }
+        strong { color: var(--md-sys-color-on-background); }
     </style>
 </head>
 <body data-theme="dark">
