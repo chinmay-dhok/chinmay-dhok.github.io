@@ -122,7 +122,7 @@
             padding: 1.5rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             transition: background-color 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
         }
         
@@ -132,6 +132,38 @@
             -webkit-backdrop-filter: var(--glass-blur);
             padding: 1rem 0;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: var(--md-sys-color-surface-variant);
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-on-background);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .mobile-menu-btn:hover {
+            border-color: var(--md-sys-color-primary);
+        }
+
+        /* Mobile nav overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .nav-overlay.active {
+            opacity: 1;
         }
 
         .card {
@@ -450,10 +482,46 @@
             table { font-size: 0.9rem; }
             th, td { padding: 0.8rem 0.5rem; }
             .bio-header h3 { font-size: 1.5rem; }
+
+            /* Mobile Navigation Drawer */
+            .mobile-menu-btn { display: flex; }
+            .nav-overlay { display: block; pointer-events: none; }
+            .nav-overlay.active { pointer-events: auto; }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                height: 100dvh;
+                flex-direction: column;
+                background-color: var(--md-sys-color-background);
+                border-left: 1px solid var(--md-sys-color-outline);
+                padding: 5rem 2rem 2rem;
+                gap: 1.5rem;
+                transition: right 0.3s ease;
+                z-index: 999;
+                box-shadow: -10px 0 40px rgba(0,0,0,0.1);
+                align-items: flex-start;
+                transform: translateZ(0);
+                will-change: transform, right;
+            }
+            .nav-links.open {
+                right: 0;
+            }
+            .nav-links .nav-btn {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+                display: inline-flex;
+            }
         }
     </style>
 </head>
 <body data-theme="dark">
+
+    <div class="nav-overlay" id="nav-overlay"></div>
 
     <nav class="navbar">
         <div class="navbar-content">
@@ -461,14 +529,19 @@
                 <img src="main_profile.jpg?v=2" alt="Chinmay Dhok" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSIzNiIgZmlsbD0iI2E4YzdmYSI+PGNpcmNsZSBjeD0iMTgiIGN5PSIxOCIgcj0iMTgiLz48L3N2Zz4='">
                 Chinmay Dhok
             </a>
-            <div class="nav-links">
+            <div class="nav-links" id="nav-links">
                 <a href="#competencies" class="nav-item">Competencies</a>
                 <a href="#frameworks" class="nav-item">Frameworks</a>
                 <a href="#about" class="nav-item">About</a>
                 <a href="/" class="nav-btn">Back to Portfolio</a>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <button id="theme-toggle" aria-label="Toggle Dark Mode">
                     <svg id="sun-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                     <svg id="moon-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open navigation menu">
+                    <span class="material-symbols-rounded">menu</span>
                 </button>
             </div>
         </div>
@@ -683,6 +756,37 @@
             } else {
                 navbar.classList.remove('scrolled');
             }
+        });
+
+        // Mobile Navigation Drawer
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinksEl = document.getElementById('nav-links');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        function openMobileNav() {
+            navLinksEl.classList.add('open');
+            navOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileNav() {
+            navLinksEl.classList.remove('open');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuBtn.addEventListener('click', () => {
+            if (navLinksEl.classList.contains('open')) {
+                closeMobileNav();
+            } else {
+                openMobileNav();
+            }
+        });
+
+        navOverlay.addEventListener('click', closeMobileNav);
+
+        navLinksEl.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMobileNav);
         });
     </script>
 </body>
