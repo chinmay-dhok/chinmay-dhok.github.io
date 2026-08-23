@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Spark Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+    <style>
+        :root {
+            /* Google Gemini Brand Colors */
+            --gemini-blue: #4285F4;
+            --gemini-purple: #8E75B2;
+            --gemini-gradient: linear-gradient(135deg, #4285F4, #8E75B2, #E9437A);
+            
+            --md-sys-color-background: #0f1115;
+            --md-sys-color-on-background: #e1e2e8;
+            --md-sys-color-surface: rgba(20, 22, 27, 0.7);
+            --md-sys-color-surface-variant: rgba(68, 71, 78, 0.4);
+            --md-sys-color-outline: rgba(142, 145, 153, 0.2);
+            --glass-blur: blur(24px);
+        }
+
+        [data-theme="light"] {
+            --md-sys-color-background: #f8fafc;
+            --md-sys-color-on-background: #0f172a;
+            --md-sys-color-surface: rgba(255, 255, 255, 0.8);
+            --md-sys-color-surface-variant: rgba(241, 245, 249, 0.8);
+            --md-sys-color-outline: rgba(148, 163, 184, 0.3);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Abstract shapes */
+        .bg-shape {
+            position: fixed; border-radius: 50%; filter: blur(120px);
+            z-index: -1; opacity: 0.4;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+        .shape-1 { width: 400px; height: 400px; background: rgba(66, 133, 244, 0.3); top: -100px; left: -100px; }
+        .shape-2 { width: 500px; height: 500px; background: rgba(142, 117, 178, 0.2); bottom: 100px; right: -150px; animation-delay: -10s; }
+        .shape-3 { width: 300px; height: 300px; background: rgba(233, 67, 122, 0.15); top: 40%; left: 30%; animation-delay: -5s; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.1); } }
+
+        /* Navbar */
+        .navbar {
+            width: 100%; background-color: var(--md-sys-color-surface); backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--md-sys-color-outline);
+            padding: 1rem 0; display: flex; justify-content: center; position: sticky; top: 0; z-index: 100;
+        }
+        .navbar-content { max-width: 900px; width: 100%; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
+        .nav-brand { display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: 700; color: var(--md-sys-color-on-background); text-decoration: none; letter-spacing: -0.5px; }
+        
+        .container { max-width: 900px; width: 100%; padding: 4rem 1.5rem; box-sizing: border-box; flex-grow: 1; }
+
+        .hero { text-align: center; margin-bottom: 3rem; }
+        .spark-logo { font-size: 3rem; background: var(--gemini-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .hero h1 { font-size: 3rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
+        .hero p { font-size: 1.2rem; color: var(--md-sys-color-secondary); margin-top: 1rem; font-weight: 300; line-height: 1.6; }
+
+        /* Accordion Library */
+        .library { display: flex; flex-direction: column; gap: 1.5rem; }
+        
+        details {
+            background-color: var(--md-sys-color-surface);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        details:hover { border-color: var(--gemini-purple); }
+        
+        details[open] { border-color: var(--gemini-blue); box-shadow: 0 10px 30px rgba(66, 133, 244, 0.1); }
+        
+        summary {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            list-style: none; /* Hide default arrow */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--md-sys-color-on-background);
+            position: relative;
+        }
+        summary::-webkit-details-marker { display: none; }
+        
+        summary .icon {
+            background: var(--md-sys-color-surface-variant);
+            width: 48px; height: 48px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 1rem;
+            color: var(--gemini-purple);
+            flex-shrink: 0;
+        }
+        details[open] summary .icon {
+            background: var(--gemini-gradient); color: #fff;
+        }
+
+        .summary-content { flex-grow: 1; display: flex; flex-direction: column; gap: 0.25rem; }
+        .summary-subtitle { font-size: 0.9rem; color: var(--md-sys-color-secondary); font-weight: 400; }
+        
+        .expand-icon {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+            color: var(--md-sys-color-secondary);
+        }
+        details[open] .expand-icon { transform: rotate(180deg); color: var(--gemini-blue); }
+
+        .details-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            border-top: 1px solid var(--md-sys-color-outline);
+            margin-top: 0.5rem;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex; align-items: center; gap: 0.5rem;
+            color: var(--gemini-purple); font-size: 1.1rem;
+            font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem;
+        }
+
+        .code-block {
+            background: rgba(0,0,0,0.3);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--md-sys-color-outline);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            color: var(--md-sys-color-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+        [data-theme="light"] .code-block { background: rgba(0,0,0,0.03); color: #334155; }
+
+        .steps-list {
+            padding-left: 1.5rem; margin: 0; color: var(--md-sys-color-on-background); line-height: 1.6;
+        }
+        .steps-list li { margin-bottom: 0.5rem; }
+
+        .outcome-box {
+            background: rgba(66, 133, 244, 0.1);
+            border-left: 4px solid var(--gemini-blue);
+            padding: 1rem 1.25rem;
+            border-radius: 0 12px 12px 0;
+            margin-top: 1rem;
+        }
+        .outcome-box ul { padding-left: 1.5rem; margin: 0; color: var(--md-sys-color-on-background); line-height: 1.6; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.2rem; }
+            summary { padding: 1.25rem; }
+            summary .icon { width: 40px; height: 40px; margin-right: 0.75rem; }
+            .details-content { padding: 0 1.25rem 1.25rem 1.25rem; }
+            .code-block { font-size: 0.85rem; padding: 1rem; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="index.html" class="nav-brand">
+                <span class="material-symbols-rounded" style="color:var(--gemini-blue);">arrow_back</span>
+                Back to Portfolio
+            </a>
+            <div class="nav-brand" style="font-size: 1.1rem;">
+                <span class="material-symbols-rounded" style="background: var(--gemini-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">auto_awesome</span>
+                Gemini Spark
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="hero">
+            <div class="spark-logo"><span class="material-symbols-rounded" style="font-size: inherit;">auto_awesome</span></div>
+            <h1>Spark Library</h1>
+            <p>An autonomous personal operating system. Deploy these custom Gemini sparks to automate your everyday logistics and administrative workflows directly from your phone or laptop.</p>
+        </header>
+
+        <div class="library">
+            
+            <!-- Spark 1 -->
+            <details>
+                <summary>
+                    <div class="icon"><span class="material-symbols-rounded">potted_plant</span></div>
+                    <div class="summary-content">
+                        <span>Automated Pune Plant Care</span>
+                        <span class="summary-subtitle">Weather-adaptive watering & task reconciliation</span>
+                    </div>
+                    <span class="material-symbols-rounded expand-icon">expand_more</span>
+                </summary>
+                <div class="details-content">
+                    <div class="section-header">
+                        <span class="material-symbols-rounded">terminal</span> System Prompt
+                    </div>
+                    <div class="code-block">Objective:
+Manage daily morning plant care and nightly feedback reconciliation for 14 indoor and balcony plants in Balewadi, Pune.
+
+Functional Steps:
+1. Retrieve hyper-local weather data for Balewadi, Pune (precipitation mm, relative humidity %, 3-day forecast).
+2. Apply Weather-Adaptive Logic:
+- Humidity > 80% or Rain > 5mm: Skip balcony watering to prevent root rot; create a task to inspect drainage saucers.
+- Monsoon Break / Overcast (60–80% humidity): Assign targeted hydration (~150ml) only to thirsty herbs/flowering pots.
+- Sunny (<50% humidity): Assign full hydration (250–400ml) and deep soak checks for succulents/herbs.
+3. Manage Indoor & Aquatic Care:
+- Check soil dryness (top 2–3 inches) for Monstera, Rubber Plant, and Peace Lily.
+- Schedule Sunday RO water replacements for Lucky Bamboo and Brazilian Wood.
+- Track Phalaenopsis Orchid root state (silvery/grey = 15-min soak & drain; green = skip).
+4. Synchronize Tasks: Push actionable items to Google Tasks with due dates set to today.
+5. Nightly Reconciliation: Read task completion notes, adjust upcoming watering cadences accordingly, and log weather, volume, and actions into the Google Sheet.</div>
+
+                    <div class="section-header">
+                        <span class="material-symbols-rounded">account_tree</span> Setup Workflow
+                    </div>
+                    <ol class="steps-list">
+                        <li><strong>Connect Workspace Extensions:</strong> Enable Google Tasks and Google Drive/Sheets integration in Gemini.</li>
+                        <li><strong>Create the Tracking Sheet:</strong> Set up a Plant Care Tracker with tabs for Plant Inventory, Daily Care & Weather Log, and Plant Action Tracker.</li>
+                        <li><strong>Configure Triggers:</strong> Set a morning trigger (8:00 AM) to fetch weather & generate tasks, and a nightly trigger (11:59 PM) for reconciliation.</li>
+                    </ol>
+
+                    <div class="outcome-box">
+                        <div style="font-weight:600; margin-bottom:0.5rem; color:var(--gemini-blue);">Outcome</div>
+                        <ul>
+                            <li>Eliminates overwatering risks during the humid Pune monsoon season.</li>
+                            <li>Provides specific daily action lists in Google Tasks with exact milliliter recommendations.</li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Spark 2 -->
+            <details>
+                <summary>
+                    <div class="icon"><span class="material-symbols-rounded">newspaper</span></div>
+                    <div class="summary-content">
+                        <span>Daily Sansad News</span>
+                        <span class="summary-subtitle">Parliamentary proceedings & legislative tracking</span>
+                    </div>
+                    <span class="material-symbols-rounded expand-icon">expand_more</span>
+                </summary>
+                <div class="details-content">
+                    <div class="section-header">
+                        <span class="material-symbols-rounded">terminal</span> System Prompt
+                    </div>
+                    <div class="code-block">Objective:
+Deliver a daily summary of Indian Parliamentary (Sansad) proceedings and legislative developments.
+
+Functional Steps:
+1. Search official news coverage, government press releases, and parliamentary reports for today's Lok Sabha and Rajya Sabha sessions.
+2. Identify key speeches delivered, notable ministers/MPs speaking, and major topics addressed.
+3. Detail all bills introduced, debated, amended, or passed during the session.
+4. Highlight major discussions, zero-hour notices, policy escalations, or disruptions.
+5. Compile and deliver a concise, structured briefing.</div>
+
+                    <div class="section-header">
+                        <span class="material-symbols-rounded">account_tree</span> Setup Workflow
+                    </div>
+                    <ol class="steps-list">
+                        <li><strong>Enable Web Search:</strong> Ensure live search tools are active in your Spark.</li>
+                        <li><strong>Configure Evening Trigger:</strong> Create a scheduled time-based trigger set to 8:00 PM daily.</li>
+                        <li><strong>Define Constraints:</strong> Specify focus areas (e.g., technology policy, data security, national infrastructure).</li>
+                    </ol>
+
+                    <div class="outcome-box">
+                        <div style="font-weight:600; margin-bottom:0.5rem; color:var(--gemini-blue);">Outcome</div>
+                        <ul>
+                            <li>Delivers a structured executive briefing every evening.</li>
+                            <li>Filters out political noise to focus on legislative substance and statutory changes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Spark 3 -->
+            <details>
+                <summary>
+                    <div class="icon"><span class="material-symbols-rounded">local_shipping</span></div>
+                    <div class="summary-content">
+                        <span>Delivery Tracking Automation</span>
+                        <span class="summary-subtitle">E-commerce email extraction & package task sync</span>
+                    </div>
+                    <span class="material-symbols-rounded expand-icon">expand_more</span>
+                </summary>
+                <div class="details-content">
+                    <div class="section-header">
+                        <span class="material-symbols-rounded">terminal</span> System Prompt
+                    </div>
+                    <div class="code-block">Objective:
+Parse incoming order and shipping emails to automatically create, update, or complete delivery tasks in Google Tasks.
+
+Functional Steps:
+1. Scan incoming emails for merchant, item details, tracking number (AWB), courier partner, and Estimated Delivery Date (EDD).
+2. Query active Google Tasks for matching Order IDs or items.
+3. Apply State Management:
+- Order Placed / Shipped: Create or update task as '📦 Expecting: <Item Name> - <Store>' with due date set to EDD.
+- Out for Delivery: Update task title to '[Arriving Today] <Item Name> - <Store>' and set due date to today.
+- Delivered: Automatically mark the matching Google Task as completed.
+4. Daily Audit (9:00 AM): Scan active tasks; reconcile overdue tasks with recent emails.</div>
+
+                    <div class="section-header">
+                        <span class="material-symbols-rounded">account_tree</span> Setup Workflow
+                    </div>
+                    <ol class="steps-list">
+                        <li><strong>Connect Gmail & Tasks:</strong> Grant Workspace extension access to read notifications and modify Tasks.</li>
+                        <li><strong>Set Up Event Trigger:</strong> Configure a trigger using Gmail search filters for common couriers and merchants.</li>
+                        <li><strong>Morning Audit Trigger:</strong> Schedule a daily check at 9:00 AM to clear expired delivery items.</li>
+                    </ol>
+
+                    <div class="outcome-box">
+                        <div style="font-weight:600; margin-bottom:0.5rem; color:var(--gemini-blue);">Outcome</div>
+                        <ul>
+                            <li>Automatically maintains package arrival dates across all merchants directly in Google Tasks.</li>
+                            <li>Removes manual tracking across courier dashboards.</li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Spark 4 -->
+            <details>
+                <summary>
+                    <div class="icon"><span class="material-symbols-rounded">mail</span></div>
+                    <div class="summary-content">
+                        <span>Gmail Organization</span>
+                        <span class="summary-subtitle">Automated label routing & inbox triage</span>
+                    </div>
+                    <span class="material-symbols-rounded expand-icon">expand_more</span>
+                </summary>
+                <div class="details-content">
+                    <div class="section-header">
+                        <span class="material-symbols-rounded">terminal</span> System Prompt
+                    </div>
+                    <div class="code-block">Objective:
+Classify incoming high-volume email traffic into structured functional labels and keep the primary inbox focused on actionable messages.
+
+Functional Steps:
+1. Define functional label categories: `Finance & Bills`, `Orders & Deliveries`, `Subscriptions & Newsletters`, `Jobs & Career`, `Security Alerts`.
+2. Construct targeted Gmail filter criteria based on verified sender domains and message subjects:
+- Finance & Bills: Bank statements, utility bills (`*@hdfcbank.net`, `*@icici.bank.in`, `*@ebill.airtel.com`).
+- Orders & Deliveries: E-commerce, cabs (`*@cred.club`, `*@uber.com`, `*@myntra.com`).
+- Jobs & Career: Job boards, recruiter alerts (`*@linkedin.com`, `*@naukri.com`), bypassing inbox.
+3. Automatically apply labels and archive non-critical automated blasts.</div>
+
+                    <div class="section-header">
+                        <span class="material-symbols-rounded">account_tree</span> Setup Workflow
+                    </div>
+                    <ol class="steps-list">
+                        <li><strong>Create Target Labels:</strong> Configure the standard label hierarchy in Gmail.</li>
+                        <li><strong>Apply Filter Rules:</strong> Implement specific filter configurations with corresponding actions (apply label, skip inbox).</li>
+                    </ol>
+
+                    <div class="outcome-box">
+                        <div style="font-weight:600; margin-bottom:0.5rem; color:var(--gemini-blue);">Outcome</div>
+                        <ul>
+                            <li>Over 50,000+ incoming emails segmented into clean, queryable categories.</li>
+                            <li>Critical financial notices remain visible without competing against newsletter traffic.</li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+            
+            <!-- Spark 5 -->
+            <details>
+                <summary>
+                    <div class="icon"><span class="material-symbols-rounded">work</span></div>
+                    <div class="summary-content">
+                        <span>Job Search Assistance</span>
+                        <span class="summary-subtitle">Curated security/AI listings triage</span>
+                    </div>
+                    <span class="material-symbols-rounded expand-icon">expand_more</span>
+                </summary>
+                <div class="details-content">
+                    <div class="section-header">
+                        <span class="material-symbols-rounded">terminal</span> System Prompt
+                    </div>
+                    <div class="code-block">Objective:
+Monitor, filter, and summarize relevant career opportunities in Information Security, Cloud Compliance (SOC 2, ISO 27001), and AI/Engineering.
+
+Functional Steps:
+1. Monitor incoming recruiter inquiries and job alert streams categorized under `Jobs & Career`.
+2. Filter openings against target criteria (e.g., Senior Information Security Analyst, Cloud Security, Security Architecture).
+3. Extract core requirements, compensation ranges (if listed), location/remote flexibility, and required tech stacks.
+4. Deliver a weekly summary of qualified matches while filtering out irrelevant bulk postings.</div>
+
+                    <div class="section-header">
+                        <span class="material-symbols-rounded">account_tree</span> Setup Workflow
+                    </div>
+                    <ol class="steps-list">
+                        <li><strong>Route Career Alerts:</strong> Direct alert streams from LinkedIn, Naukri, etc. into the Jobs & Career label.</li>
+                        <li><strong>Define Candidate Profile Parameters:</strong> Provide Gemini with target roles, experience level, and key domain skills.</li>
+                        <li><strong>Schedule Digest Queries:</strong> Set a recurring schedule to review newly indexed postings.</li>
+                    </ol>
+
+                    <div class="outcome-box">
+                        <div style="font-weight:600; margin-bottom:0.5rem; color:var(--gemini-blue);">Outcome</div>
+                        <ul>
+                            <li>Saves time by filtering through high-volume job alert emails.</li>
+                            <li>Delivers concise summaries of roles that match specific technical experience.</li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+
+        </div>
+    </div>
+</body>
+</html>
