@@ -226,7 +226,25 @@
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
+            position: relative;
             transition: color 0.2s;
+        }
+        /* Active indicator underline */
+        .nav-links a.nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--md-sys-color-primary);
+            border-radius: 1px;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+        .nav-links a.nav-item:hover::after,
+        .nav-links a.nav-item.active::after {
+            width: 100%;
+            left: 0;
         }
 
         .nav-links a.nav-item:hover {
@@ -509,6 +527,13 @@
             }
             .nav-links.open {
                 right: 0;
+            }
+            .nav-links a.nav-item {
+                font-size: 1.1rem;
+                padding: 0.5rem 0;
+            }
+            .nav-links a.nav-item::after {
+                bottom: 0;
             }
             .nav-links .nav-btn {
                 width: 100%;
