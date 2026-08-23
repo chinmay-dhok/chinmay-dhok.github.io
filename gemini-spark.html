@@ -125,9 +125,71 @@
         .navbar {
             width: 100%; background-color: var(--md-sys-color-surface); backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--md-sys-color-outline);
-            padding: 1rem 0; display: flex; justify-content: center; position: sticky; top: 0; z-index: 100;
+            padding: 1rem 0; display: flex; justify-content: center; position: sticky; top: 0; z-index: 1000;
         }
         .navbar-content { width: 100%; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
+        .nav-brand { display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: 700; color: var(--md-sys-color-on-background); text-decoration: none; letter-spacing: -0.5px; transition: color var(--md-motion-duration-medium) var(--md-motion-expressive-default-effects); }
+        .nav-brand:hover { color: var(--gemini-blue); }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: var(--md-sys-color-surface-variant);
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-on-background);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: all var(--md-motion-duration-medium) var(--md-motion-expressive-default-effects);
+        }
+        .mobile-menu-btn:hover {
+            border-color: var(--gemini-blue);
+        }
+
+        /* Mobile nav overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity var(--md-motion-duration-medium) var(--md-motion-expressive-default-effects);
+        }
+        .nav-overlay.active {
+            opacity: 1;
+        }
+
+        .nav-links {
+            display: none;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        @media (min-width: 900px) {
+            .nav-links { display: flex; }
+        }
+        .nav-item {
+            color: var(--md-sys-color-on-background);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-item:hover { color: var(--gemini-blue); }
+        .nav-btn {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-background);
+            text-decoration: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--md-shape-corner-full);
+            font-weight: 600;
+            border: 1px solid var(--md-sys-color-outline);
+            transition: all var(--md-motion-duration-medium) var(--md-motion-expressive-default-effects);
+        }
+        .nav-btn:hover {
+            border-color: var(--gemini-blue);
+        }
         .nav-brand { display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: 700; color: var(--md-sys-color-on-background); text-decoration: none; letter-spacing: -0.5px; transition: color var(--md-motion-duration-medium) var(--md-motion-expressive-default-effects); }
         .nav-brand:hover { color: var(--gemini-blue); }
         
@@ -298,13 +360,48 @@
             transform: translateY(-2px);
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 800px) {
             .hero h1 { font-size: 2.2rem; }
             .spark-title { font-size: 2rem; }
             .spark-card { padding: 1.25rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
             .spark-card .icon { margin-right: 0; }
             .expand-icon { display: none; }
             .container { padding: var(--md-spacing-2xl) var(--md-spacing-md); }
+            
+            /* Mobile Navigation Drawer */
+            .mobile-menu-btn { display: flex; }
+            .nav-overlay { display: block; pointer-events: none; }
+            .nav-overlay.active { pointer-events: auto; }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                height: 100dvh;
+                display: flex;
+                flex-direction: column;
+                background-color: var(--md-sys-color-background);
+                border-left: 1px solid var(--md-sys-color-outline);
+                padding: 5rem 2rem 2rem;
+                gap: 1.5rem;
+                transition: right var(--md-motion-duration-default) var(--md-motion-expressive-default-spatial);
+                z-index: 999;
+                box-shadow: -10px 0 40px rgba(0,0,0,0.1);
+                align-items: flex-start;
+                transform: translateZ(0);
+                will-change: transform, right;
+            }
+            .nav-links.open {
+                right: 0;
+            }
+            .nav-links .nav-btn {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+                display: inline-flex;
+            }
         }
 
         /* === Reduced Motion === */
@@ -324,14 +421,29 @@
     <div class="bg-shape shape-2"></div>
     <div class="bg-shape shape-3"></div>
 
+    <div class="nav-overlay" id="nav-overlay"></div>
+
     <nav class="navbar">
         <div class="navbar-content">
             <a href="index.html" class="nav-brand">
                 <span class="material-symbols-rounded" style="color:var(--gemini-blue);">arrow_back</span>
-                Back to Portfolio
+                Portfolio
             </a>
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <div class="nav-brand" style="font-size: 1.1rem;">
+            
+            <div class="nav-links" id="nav-links">
+                <a href="index.html#about" class="nav-item">About</a>
+                <a href="index.html#projects" class="nav-item">Projects</a>
+                <a href="index.html#career-docs" class="nav-item">Documents</a>
+                <a href="./playbook/" class="nav-btn">Strategic Playbook</a>
+                
+                <div class="nav-brand" style="font-size: 1.1rem; margin-top: 1rem;">
+                    <img src="https://cdn.simpleicons.org/googlegemini/4285F4" alt="Gemini" style="width: 20px; height: 20px;">
+                    Gemini Spark
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <div class="nav-brand desktop-only-title" style="font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; margin-right: 0.5rem;">
                     <img src="https://cdn.simpleicons.org/googlegemini/4285F4" alt="Gemini" style="width: 20px; height: 20px;">
                     Gemini Spark
                 </div>
@@ -339,7 +451,19 @@
                     <svg id="sun-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                     <svg id="moon-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </button>
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open navigation menu">
+                    <span class="material-symbols-rounded">menu</span>
+                </button>
             </div>
+            
+            <style>
+                @media (max-width: 800px) {
+                    .desktop-only-title { display: none !important; }
+                }
+                @media (min-width: 801px) {
+                    #nav-links .nav-brand { display: none !important; }
+                }
+            </style>
         </div>
     </nav>
 
@@ -469,6 +593,39 @@
                 card.style.setProperty('--ripple-y', ((e.clientY - rect.top) / rect.height) * 100 + '%');
             });
         });
+
+        // === Mobile Navigation Drawer ===
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinksEl = document.getElementById('nav-links');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        if (mobileMenuBtn && navLinksEl && navOverlay) {
+            function openMobileNav() {
+                navLinksEl.classList.add('open');
+                navOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMobileNav() {
+                navLinksEl.classList.remove('open');
+                navOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            mobileMenuBtn.addEventListener('click', () => {
+                if (navLinksEl.classList.contains('open')) {
+                    closeMobileNav();
+                } else {
+                    openMobileNav();
+                }
+            });
+
+            navOverlay.addEventListener('click', closeMobileNav);
+
+            navLinksEl.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMobileNav);
+            });
+        }
     </script>
 </body>
 </html>
