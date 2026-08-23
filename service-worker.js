@@ -1,5 +1,5 @@
 // Service Worker — App Shell + Network-First Strategy
-const CACHE_NAME = 'chinmay-portfolio-v1';
+const CACHE_NAME = 'chinmay-portfolio-v2';
 const APP_SHELL = [
     '/',
     '/index.html',
@@ -44,15 +44,9 @@ self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
 
-    // Skip non-GET requests and cross-origin requests (except fonts & icons)
+    // Skip non-GET requests and ALL cross-origin requests
     if (request.method !== 'GET') return;
-    if (url.origin !== location.origin && 
-        !url.hostname.includes('fonts.googleapis.com') && 
-        !url.hostname.includes('fonts.gstatic.com') &&
-        !url.hostname.includes('cdn.simpleicons.org') &&
-        !url.hostname.includes('cdn.jsdelivr.net')) {
-        return;
-    }
+    if (url.origin !== location.origin) return;
 
     // HTML pages: Network-first
     if (request.headers.get('accept')?.includes('text/html')) {
