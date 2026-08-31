@@ -1276,12 +1276,19 @@
 
         // === Ripple Effect (track mouse position) ===
         document.querySelectorAll('.card').forEach(card => {
+            let rafId = null;
             card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                card.style.setProperty('--ripple-x', x + '%');
-                card.style.setProperty('--ripple-y', y + '%');
+                if (rafId) {
+                    cancelAnimationFrame(rafId);
+                }
+                rafId = requestAnimationFrame(() => {
+                    const rect = card.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    card.style.setProperty('--ripple-x', x + '%');
+                    card.style.setProperty('--ripple-y', y + '%');
+                    rafId = null;
+                });
             });
         });
 
