@@ -803,6 +803,19 @@
         }
 
         @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden !important;
+                width: 100%;
+                max-width: 100vw;
+                position: relative;
+            }
+            .site-wrapper {
+                overflow-x: hidden;
+                width: 100%;
+                max-width: 100vw;
+                position: relative;
+            }
+
             .hero h1 { font-size: 2.5rem; }
             section { padding: var(--md-spacing-2xl) var(--md-spacing-lg); }
             .grid { grid-template-columns: 1fr; }
@@ -816,7 +829,8 @@
             .nav-links {
                 position: fixed;
                 top: 0;
-                right: -100%;
+                right: 0;
+                transform: translateX(100%);
                 width: 280px;
                 height: 100vh;
                 height: 100dvh;
@@ -825,15 +839,14 @@
                 border-left: 1px solid var(--md-sys-color-outline);
                 padding: 5rem 2rem 2rem;
                 gap: 1.5rem;
-                transition: right var(--md-motion-duration-default) var(--md-motion-expressive-default-spatial);
+                transition: transform var(--md-motion-duration-default) var(--md-motion-expressive-default-spatial);
                 z-index: 999;
                 box-shadow: -10px 0 40px rgba(0,0,0,0.1);
                 align-items: flex-start;
-                transform: translateZ(0); /* Hardware acceleration to prevent flicker */
-                will-change: transform, right;
+                will-change: transform;
             }
             .nav-links.open {
-                right: 0;
+                transform: translateX(0);
             }
             .nav-links a.nav-item {
                 font-size: 1.1rem;
@@ -918,6 +931,7 @@
     </style>
 </head>
 <body data-theme="dark">
+    <div class="site-wrapper">
 
     <!-- Splash Screen -->
     <div id="pwa-splash">
@@ -1368,5 +1382,6 @@
                 .catch(err => console.error('SW registration failed:', err));
         }
     </script>
+    </div>
 </body>
 </html>
