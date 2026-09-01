@@ -835,7 +835,9 @@
                 height: 100vh;
                 height: 100dvh;
                 flex-direction: column;
-                background-color: var(--md-sys-color-background);
+                background-color: var(--md-sys-color-surface);
+                backdrop-filter: var(--glass-blur);
+                -webkit-backdrop-filter: var(--glass-blur);
                 border-left: 1px solid var(--md-sys-color-outline);
                 padding: 5rem 2rem 2rem;
                 gap: 1.5rem;
@@ -844,6 +846,13 @@
                 box-shadow: -10px 0 40px rgba(0,0,0,0.1);
                 align-items: flex-start;
                 will-change: transform;
+            }
+
+            [data-theme="dark"] .nav-links {
+                background-color: rgba(20, 22, 27, 0.9);
+            }
+            [data-theme="light"] .nav-links {
+                background-color: rgba(255, 255, 255, 0.9);
             }
             .nav-links.open {
                 transform: translateX(0);
