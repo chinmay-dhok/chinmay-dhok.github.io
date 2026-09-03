@@ -18,7 +18,6 @@ self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
-                console.log('[SW] Pre-caching app shell');
                 return cache.addAll(APP_SHELL);
             })
             .then(() => self.skipWaiting())
@@ -32,7 +31,6 @@ self.addEventListener('activate', (event) => {
             return Promise.all(
                 keys.filter(key => key !== CACHE_NAME)
                     .map(key => {
-                        console.log('[SW] Removing old cache:', key);
                         return caches.delete(key);
                     })
             );
