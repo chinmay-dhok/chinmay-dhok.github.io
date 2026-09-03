@@ -1355,8 +1355,7 @@
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log(`Install outcome: ${outcome}`);
+                await deferredPrompt.userChoice;
                 deferredPrompt = null;
                 installBtn.classList.remove('show');
             }
@@ -1370,7 +1369,6 @@
         // === Service Worker Registration ===
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('service-worker.js')
-                .then(reg => console.log('SW registered:', reg.scope))
                 .catch(err => console.error('SW registration failed:', err));
         }
     </script>
