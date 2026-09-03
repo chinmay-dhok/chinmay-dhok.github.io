@@ -587,10 +587,23 @@
 
         // === Ripple Effect ===
         document.querySelectorAll('.spark-card').forEach(card => {
+            let ticking = false;
+            let currentX = 0;
+            let currentY = 0;
+
             card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                card.style.setProperty('--ripple-x', ((e.clientX - rect.left) / rect.width) * 100 + '%');
-                card.style.setProperty('--ripple-y', ((e.clientY - rect.top) / rect.height) * 100 + '%');
+                currentX = e.clientX;
+                currentY = e.clientY;
+
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const rect = card.getBoundingClientRect();
+                        card.style.setProperty('--ripple-x', ((currentX - rect.left) / rect.width) * 100 + '%');
+                        card.style.setProperty('--ripple-y', ((currentY - rect.top) / rect.height) * 100 + '%');
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
             });
         });
 
